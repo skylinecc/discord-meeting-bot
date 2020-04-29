@@ -1,5 +1,9 @@
 import discord
 
+f = open("config.txt", "r")
+config_info = f.readlines()
+f.close()
+
 
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -20,4 +24,4 @@ class MyClient(discord.Client):
 
 
 client = MyClient()
-client.run('token')
+client.run(config_info[0])
