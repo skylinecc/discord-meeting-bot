@@ -1,2 +1,2 @@
 # Discord Meeting Schedule Announcement Bot
-Scrapes the contents of a Canvas web page containing a meeting link to announce on Discord. 
+Gets a Zoom meeting link from a page through the Canvas LMS REST API to announce in a Discord server
