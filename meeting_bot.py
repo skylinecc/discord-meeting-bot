@@ -28,7 +28,7 @@ def get_info():
             meeting_i_end = j + 1
             break
     if meeting_i_end == -1 or meeting_i_start == -1:
-        return "I couldn't find the meeting information for the current week."\
+        return "I couldn't find the meeting information for the current week."
 
     # print("\n".join(page_lines[meeting_i_start:meeting_i_end]))
     return "\n".join(page_lines[meeting_i_start:meeting_i_end])
