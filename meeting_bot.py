@@ -3,14 +3,12 @@ import html2text
 from canvasapi import Canvas
 from canvasapi.page import Page
 
-f = open("config.txt", "r")
-config_info = f.readlines()
-f.close()
+f = open("api_key.txt", "r")
 
 # Canvas API URL
 API_URL = "https://graniteschools.instructure.com/api/v1"
 # Canvas API key
-API_KEY = config_info[3]
+API_KEY = f.readline()
 
 
 def get_info():
@@ -49,6 +47,7 @@ class MyClient(discord.Client):
                                        'for the next Zoom meeting, type `-nextmeeting`')
 
         elif message.content.startswith('-nextmeeting'):
+            print('Triggered by {0.author}!'.format(message))
             await message.channel.send('Let me check...')
             await message.channel.send(get_info()[:1999])
 
@@ -58,4 +57,5 @@ class MyClient(discord.Client):
 
 
 client = MyClient()
-client.run(config_info[0])
+client.run(f.readline())
+f.close()
