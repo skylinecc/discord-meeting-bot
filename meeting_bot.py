@@ -18,7 +18,7 @@ def get_info():
 
     course = canvas.get_course(1337964)
     pages = [str(html2text.html2text(Page.show_latest_revision(p).body)) for p in course.get_pages() if p.title.startswith("Week of")]
-    page_lines = pages[len(pages) - 1].splitlines()
+    page_lines = [x if not x.startswith("http") else "<" + x + ">" for x in pages[len(pages) - 1].splitlines()]
     meeting_i_start = -1
     meeting_i_end = -1
     for i in range(len(page_lines)):
@@ -30,7 +30,9 @@ def get_info():
             meeting_i_end = j + 1
             break
     if meeting_i_end == -1 or meeting_i_start == -1:
-        return "I couldn't find the meeting information for the current week."
+        return "I couldn't find the meeting information for the current week."\
+
+    # print("\n".join(page_lines[meeting_i_start:meeting_i_end]))
     return "\n".join(page_lines[meeting_i_start:meeting_i_end])
 
 
