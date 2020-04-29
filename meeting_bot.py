@@ -18,6 +18,7 @@ def get_info():
     pages = [p for p in course.get_pages() if p.title.startswith("Week of")]
     page = str(html2text.html2text(Page.show_latest_revision(pages[len(pages) - 1]).body))
     # print(page)
+    title = pages[len(pages) - 1].title
     page_lines = [x if not x.startswith("http") else "<" + x + ">" for x in page.splitlines()]
     meeting_i_start = -1
     meeting_i_end = -1
@@ -30,10 +31,9 @@ def get_info():
             meeting_i_end = j + 1
             break
     if meeting_i_end == -1 or meeting_i_start == -1:
-        return "I couldn't find the meeting information for the current week."
+        return "I couldn't find the meeting information for the current week. (" + title + ")"
 
     # print("\n".join(page_lines[meeting_i_start:meeting_i_end]))
-    title = pages[len(pages) - 1].title
     return "Meetings for the " + title[0].lower() + title[1:] + ":\n" + "\n".join(page_lines[meeting_i_start:meeting_i_end])
 
 
