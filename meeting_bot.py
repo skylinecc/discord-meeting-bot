@@ -15,8 +15,10 @@ def get_info():
     canvas = Canvas(API_URL, API_KEY)
 
     course = canvas.get_course(1337964)
-    pages = [str(html2text.html2text(Page.show_latest_revision(p).body)) for p in course.get_pages() if p.title.startswith("Week of")]
-    page_lines = [x if not x.startswith("http") else "<" + x + ">" for x in pages[len(pages) - 1].splitlines()]
+    pages = [p for p in course.get_pages() if p.title.startswith("Week of")]
+    page = str(html2text.html2text(Page.show_latest_revision(pages[len(pages) - 1]).body))
+    # print(page)
+    page_lines = [x if not x.startswith("http") else "<" + x + ">" for x in page.splitlines()]
     meeting_i_start = -1
     meeting_i_end = -1
     for i in range(len(page_lines)):
@@ -31,7 +33,8 @@ def get_info():
         return "I couldn't find the meeting information for the current week."
 
     # print("\n".join(page_lines[meeting_i_start:meeting_i_end]))
-    return "\n".join(page_lines[meeting_i_start:meeting_i_end])
+    title = pages[len(pages) - 1].title
+    return "Meetings for the " + title[0].lower() + title[1:] + ":\n" + "\n".join(page_lines[meeting_i_start:meeting_i_end])
 
 
 class MyClient(discord.Client):
